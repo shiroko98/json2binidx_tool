@@ -97,7 +97,8 @@ class Encoder(object):
             elif conversation.get('from').lower() == ROLE_ASSISTANT.lower():
                 role = ROLE_ASSISTANT
 
-            utterance = re.sub(r'[\n\r]+', '\n', conversation.get('value')).strip()
+            utterance = re.sub(r'(\r\n|\n\r)', '\n', conversation.get('value')).strip()
+            utterance = re.sub(r'\n', '\r\n', utterance)
             if self.args.ftfy:
                 utterance = ftfy.fix_text(utterance)
 
